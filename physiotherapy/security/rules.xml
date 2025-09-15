@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Module Category -->
+    <record id="module_doctors_appointment" model="ir.module.category">
+        <field name="name">Cases Appointment</field>
+        <field name="description">Cases Appointment Category</field>
+    </record>
+
+    <!-- User Groups -->
+    <record id="group_doctors_appointment_administrator" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="category_id" ref="physiotherapy.module_doctors_appointment"/>
+    </record>
+
+    <record id="group_doctors_appointment_recption" model="res.groups">
+        <field name="name">Recption</field>
+        <field name="category_id" ref="physiotherapy.module_doctors_appointment"/>
+    </record>
+
+    <record id="group_doctors_appointment_doctor" model="res.groups">
+        <field name="name">Doctor</field>
+        <field name="category_id" ref="physiotherapy.module_doctors_appointment"/>
+    </record>
+
+    <record id="module_contact_access" model="ir.module.category">
+        <field name="name">Contact</field>
+        <field name="description">Access groups for managing patient contact and registration.</field>
+    </record>
+    <!-- Recption Group -->
+    <record id="group_contact_recption" model="res.groups">
+        <field name="name">Recption</field>
+        <field name="category_id" ref="physiotherapy.module_contact_access"/>
+    </record>
+    <!-- Doctor Group -->
+    <record id="group_contact_doctor" model="res.groups">
+        <field name="name">Doctor</field>
+        <field name="category_id" ref="physiotherapy.module_contact_access"/>
+    </record>
+
+<!--    <data noupdate="1">-->
+
+<!--        &lt;!&ndash; Doctor: يشوف الحالات بتاعته فقط &ndash;&gt;-->
+<!--        <record id="rule_my_cases_doctor_only" model="ir.rule">-->
+<!--            <field name="name">Doctor: See own cases only</field>-->
+<!--            <field name="model_id" ref="model_my_cases"/>-->
+<!--            <field name="domain_force">[('doctor.user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('doctors_appointment.group_doctors_appointment_doctor'))]"/>-->
+<!--            <field name="perm_read" eval="1"/>-->
+<!--            <field name="perm_write" eval="1"/>-->
+<!--            <field name="perm_create" eval="1"/>-->
+<!--            <field name="perm_unlink" eval="0"/>-->
+<!--        </record>-->
+
+
+<!--        &lt;!&ndash; Admin: يشوف كل الحالات &ndash;&gt;-->
+<!--        <record id="rule_my_cases_admin" model="ir.rule">-->
+<!--            <field name="name">Admin: See all cases</field>-->
+<!--            <field name="model_id" ref="model_my_cases"/>-->
+<!--            <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('doctors_appointment.group_doctors_appointment_administrator'))]"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="True"/>-->
+<!--            <field name="perm_create" eval="True"/>-->
+<!--            <field name="perm_unlink" eval="True"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Doctor: يشوف فواتير مرضاه فقط &ndash;&gt;-->
+<!--        <record id="rule_invoice_doctor_only" model="ir.rule">-->
+<!--            <field name="name">Doctor: See own patients' invoices</field>-->
+<!--            <field name="model_id" ref="account.model_account_move"/>-->
+<!--            <field name="domain_force">[('partner_id.doctor.user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('doctors_appointment.group_doctors_appointment_doctor'))]"/>-->
+<!--            <field name="perm_read" eval="1"/>-->
+<!--            <field name="perm_write" eval="0"/>-->
+<!--            <field name="perm_create" eval="0"/>-->
+<!--            <field name="perm_unlink" eval="0"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Admin: يشوف كل الفواتير &ndash;&gt;-->
+<!--        <record id="rule_invoice_admin" model="ir.rule">-->
+<!--            <field name="name">Admin: See all invoices</field>-->
+<!--            <field name="model_id" ref="account.model_account_move"/>-->
+<!--            <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('doctors_appointment.group_doctors_appointment_administrator'))]"/>-->
+<!--            <field name="perm_read" eval="1"/>-->
+<!--            <field name="perm_write" eval="1"/>-->
+<!--            <field name="perm_create" eval="1"/>-->
+<!--            <field name="perm_unlink" eval="1"/>-->
+<!--        </record>-->
+
+<!--    </data>-->
+
+</odoo>

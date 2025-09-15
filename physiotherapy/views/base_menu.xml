@@ -1,0 +1,23 @@
+<odoo>
+    <!-- Root Menu -->
+    <menuitem
+        id="physiotherapy_root_menu"
+        name="physiotherapy "
+
+    />
+
+<!--     Submenu for Sheets -->
+    <menuitem
+        id="physiotherapy_menu"
+        name="physiotherapy"
+        parent="physiotherapy_root_menu"
+    />
+
+    <menuitem
+            id="menu_my_cases_root"
+              name="الحالات"
+
+    />
+
+
+</odoo>

@@ -1,0 +1,46 @@
+<odoo>
+    <record id="view_form_my_cases" model="ir.ui.view">
+        <field name="name">my.cases.form</field>
+        <field name="model">my.cases</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+
+                        <field name="patient_id"/>
+                        <field name="doctor"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tree_my_cases" model="ir.ui.view">
+        <field name="name">my.cases.tree</field>
+        <field name="model">my.cases</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="patient_id"/>
+                <field name="doctor"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_my_cases" model="ir.actions.act_window">
+        <field name="name">الحالات</field>
+        <field name="res_model">my.cases</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+            <!-- Menu Item - مخفي عن الاستقبال -->
+        <menuitem id="menu_my_cases"
+                  name="الحالات"
+                  parent="menu_my_cases_root"
+                  action="action_my_cases"
+                  groups="group_doctors_appointment_doctor,group_doctors_appointment_administrator"/>
+
+
+
+
+    <menuitem id="menu_my_cases" name="الحالات" parent="menu_my_cases_root" action="action_my_cases"/>
+</odoo>

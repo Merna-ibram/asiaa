@@ -1,0 +1,229 @@
+<odoo>
+    <data>
+
+        <!-- Inherit res.partner form view -->
+        <record id="view_partner_form_inherit_medical" model="ir.ui.view">
+            <field name="name">res.partner.form.medical.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Smart Button -->
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="appointment"
+                            type="object"
+                            string="المواعيد"
+                            class="oe_stat_button"
+                            icon="fa-calendar"
+                            invisible="not show_appointment_button"/>
+                </xpath>
+
+                <xpath expr="//field[@name='vat']" position="after">
+
+                    <group col="4" colspan="4">
+                        <field name="is_patient"/>
+                    </group>
+
+                    <group col="4" colspan="4">
+                        <field name="code" readonly="1"/>
+                        <field name="birth_date"/>
+                        <field name="age" readonly="1"/>
+                        <field name="gender"/>
+                    </group>
+
+                    <separator string="معلومات إضافية"/>
+                   <group col="2" colspan="4">
+                       <field name="nationality_id" placeholder="مثال: Egypt"/>
+                       <field name="state_code" placeholder="مثال: 165"/>
+                       <field name="tax_number"/>
+                   </group>
+                    <group col="4" colspan="4" >
+                        <field name="identity_info" placeholder="مثال: رقم القومي (في مصر) أو رقم الهوية (في السعودية)"/>
+                        <field name="national_address" placeholder="مثال: رقم المبنى، اسم الشارع، اسم الحي، المدينة"/>
+                    </group>
+
+                    <!-- Doctor field - only visible when is_patient is True -->
+                    <group name="doctor_section" col="4" colspan="4" invisible="is_patient == False">
+                        <separator string=" معلومات المريض"/>
+                        <field name="doctor"/>
+                    </group>
+                    <field name="show_appointment_button" invisible="1"/>
+
+
+                     <!-- The rest: only shown if is_patient is True and NOT for reception users -->
+                    <group name="patient_section" invisible="is_patient == False" col="4" colspan="4">
+
+                        <separator string="التشخيص"/>
+                        <group col="4" colspan="4">
+                            <field name="diagnosis"/>
+                        </group>
+
+                        <separator string="Medical History"/>
+                        <group col="4" colspan="4">
+                            <field name="htn"/>
+                            <field name="dm"/>
+                            <field name="osteoporosis"/>
+                            <field name="cardiac_problems"/>
+                            <field name="other_medical"/>
+                            <field name="surgical_history"/>
+                        </group>
+
+                        <separator string="Past History"/>
+                        <group col="4" colspan="4">
+                            <field name="rta"/>
+                            <field name="sport_injury"/>
+                            <field name="electrical_shock"/>
+                            <field name="burn"/>
+                            <field name="lifting_heavy_object"/>
+                            <field name="no_history_of_trauma"/>
+                            <field name="duration"/>
+                        </group>
+
+                        <separator string="Chief Complain and present history"/>
+                        <group col="4" colspan="4">
+                            <field name="pain"/>
+                            <field name="stiffness"/>
+                            <field name="weakness"/>
+                            <field name="neuro_deficit"/>
+                            <field name="other_chief"/>
+                        </group>
+
+                        <separator string="Pain Description"/>
+                        <group col="4" colspan="4">
+                            <field name="onset"/>
+                            <field name="pain_localized"/>
+                            <field name="pain_radiated"/>
+                            <field name="pain_constant"/>
+                            <field name="pain_intermittent"/>
+                            <field name="aggravated_by"/>
+                            <field name="relieved_by"/>
+                        </group>
+
+                        <separator string="Patient Condition on Arrival"/>
+                        <group col="4" colspan="4">
+                            <field name="patient_wheelchair"/>
+                            <field name="patient_assistive"/>
+                            <field name="patient_carried"/>
+                            <field name="patient_on_bed"/>
+                            <field name="patient_normal"/>
+                            <field name="gait_other"/>
+                        </group>
+
+                        <separator string="Consciousness"/>
+                        <group>
+                            <field name="oriented"/>
+                            <field name="confused"/>
+                            <field name="vegetated"/>
+                            <field name="conscious_other"/>
+                        </group>
+
+                        <separator string="Risk of Falls"/>
+                        <group col="4" colspan="4">
+                            <field name="risk_time"/>
+                            <field name="risk_level"/>
+                        </group>
+
+                        <separator string="Symptoms"/>
+                        <group col="4" colspan="4">
+                            <field name="edema"/>
+                            <field name="swelling"/>
+                            <field name="redness"/>
+                            <field name="hotness"/>
+                            <field name="muscle_weakness"/>
+                            <field name="muscle_spasm"/>
+                            <field name="muscle_atrophy"/>
+                            <field name="deformity"/>
+                        </group>
+
+                        <separator string="Session Details"/>
+                        <group col="4" colspan="4">
+                            <field name="session"/>
+                            <field name="lazer"/>
+                            <field name="shock_wave"/>
+                            <field name="traction"/>
+                        </group>
+
+                        <separator string="Examination"/>
+                        <group col="4" colspan="4">
+                            <field name="neuro_exam"/>
+                            <field name="active_rom"/>
+                            <field name="passive_rom"/>
+                            <field name="muscle_test"/>
+                            <field name="special_test"/>
+                        </group>
+
+                    </group>
+                </xpath>
+
+                <!-- Hide default fields -->
+                <xpath expr="//field[@name='category_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='function']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='email']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='website']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='title']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lang']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='contact_addresses']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='sales_purchases']//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Additional hiding for Reception users via groups attribute -->
+        <record id="view_partner_form_reception_limited" model="ir.ui.view">
+            <field name="name">res.partner.form.reception.limited</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="view_partner_form_inherit_medical"/>
+            <field name="arch" type="xml">
+                <!-- Hide all patient details for reception except doctor field when is_patient is True -->
+                <xpath expr="//group[@name='patient_section']" position="attributes">
+                    <attribute name="groups">!physiotherapy.group_contact_recption</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Country form view inheritance -->
+        <record id="view_country_form_inherit_state_code" model="ir.ui.view">
+            <field name="name">res.country.form.inherit.state.code</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="state_code"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Server Action to Trigger Assign Code -->
+        <record id="action_assign_missing_country_codes" model="ir.actions.server">
+            <field name="name">Assign Missing Country Codes</field>
+            <field name="model_id" ref="base.model_res_country"/>
+            <field name="state">code</field>
+            <field name="code">model.assign_missing_state_codes()</field>
+        </record>
+
+    </data>
+</odoo>

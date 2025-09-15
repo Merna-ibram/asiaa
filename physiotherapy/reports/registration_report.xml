@@ -1,0 +1,210 @@
+<odoo>
+  <record id="registration_report" model="ir.actions.report">
+    <field name="name">Registration Report</field>
+    <field name="model">res.partner</field>
+    <field name="report_type">qweb-html</field>
+    <field name="binding_model_id" ref="base.model_res_partner"/>
+    <field name="binding_type">report</field>
+    <field name="report_name">physiotherapy.registration_report_template</field>
+  </record>
+
+  <template id="registration_report_template">
+    <t t-call="web.external_layout">
+      <t t-foreach="docs" t-as="doc">
+        <div class="page">
+
+          <style>
+            .registration-table {
+              width: 100%;
+              border-collapse: collapse;
+              font-size: 13px;
+              margin-top: 16px;
+            }
+            .registration-table th, .registration-table td {
+              border: 1px solid #999;
+              padding: 8px;
+              vertical-align: top;
+              text-align: left;
+            }
+            .registration-table th {
+              background-color: #f0f0f0;
+              font-weight: bold;
+            }
+            .section-header {
+              background-color: #d0d0d0;
+              text-align: center;
+              font-weight: bold;
+            }
+          </style>
+
+          <div class="text-center" style="margin-bottom: 16px;">
+            <h2 style="font-size: 22px; font-weight: bold;">Asia Center for Physical Therapy</h2>
+          </div>
+
+          <table class="registration-table">
+            <tbody>
+
+              <tr>
+                <th>Name</th>
+                <td colspan="3"><span t-field="doc.name"/></td>
+                <th>Phone</th>
+                <td><span t-field="doc.mobile"/></td>
+                <th>Sex</th>
+                <td><span t-field="doc.gender"/></td>
+              </tr>
+
+              <tr>
+                <th>Age</th>
+                <td><span t-field="doc.age"/></td>
+                <th>Date</th>
+                <td><span t-field="doc.date"/></td>
+                <th>Number Of Months</th>
+                <td><span t-field="doc.months"/></td>
+                <th>End Date</th>
+                <td><span t-field="doc.end_date"/></td>
+              </tr>
+
+              <tr><th colspan="8" class="section-header">الاخصائي</th></tr>
+              <tr><td colspan="8"><p t-field="doc.sales_person"/></td></tr>
+
+              <tr><th colspan="8" class="section-header">Diagnosis</th></tr>
+              <tr><td colspan="8"><p t-field="doc.diagnosis"/></td></tr>
+
+              <tr><th colspan="8" class="section-header">Past History</th></tr>
+              <tr>
+                <td colspan="8">
+                  <ul>
+                    <li t-if="doc.rta">RTA</li>
+                    <li t-if="doc.sport_injury">Sport injury</li>
+                    <li t-if="doc.electrical_shock">Electrical shock</li>
+                    <li t-if="doc.burn">Burn</li>
+                    <li t-if="doc.lifting_heavy_object">Lifting heavy object</li>
+                    <li t-if="doc.no_history_of_trauma">No history of trauma</li>
+                  </ul>
+                  <p><strong>Duration:</strong> <span t-field="doc.duration"/></p>
+                </td>
+              </tr>
+
+              <tr><th colspan="8" class="section-header">Medical History</th></tr>
+              <tr>
+                <td colspan="8">
+                  <ul>
+                    <li t-if="doc.htn">HTN</li>
+                    <li t-if="doc.dm">D.M</li>
+                    <li t-if="doc.osteoporosis">Osteoporosis</li>
+                    <li t-if="doc.cardiac_problems">Cardiac problems</li>
+                    <li t-if="doc.other_medical">Other: <span t-field="doc.other_medical"/></li>
+                  </ul>
+                  <p><strong>Surgical History:</strong> <span t-field="doc.surgical_history"/></p>
+                </td>
+              </tr>
+
+              <tr><th colspan="8" class="section-header">Chief Complaint</th></tr>
+              <tr>
+                <td colspan="8">
+                  <ul>
+                    <li t-if="doc.pain">Pain</li>
+                    <li t-if="doc.stiffness">Stiffness</li>
+                    <li t-if="doc.weakness">Weakness</li>
+                    <li t-if="doc.neuro_deficit">Neurological deficit</li>
+                    <li t-if="doc.other_chief">Other</li>
+                  </ul>
+                </td>
+              </tr>
+
+              <tr><th colspan="8" class="section-header">Pain Description</th></tr>
+              <tr>
+                <th>Onset</th>
+                <td><span t-field="doc.onset"/></td>
+                <td colspan="6">
+                  <ul>
+                    <li t-if="doc.pain_localized">Localized</li>
+                    <li t-if="doc.pain_radiated">Radiated</li>
+                    <li t-if="doc.pain_constant">Constant</li>
+                    <li t-if="doc.pain_intermittent">Intermittent</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <th>Aggravated by</th>
+                <td><span t-field="doc.aggravated_by"/></td>
+                <th>Relieved by</th>
+                <td colspan="5"><span t-field="doc.relieved_by"/></td>
+              </tr>
+
+              <tr><th colspan="8" class="section-header">Physical Condition</th></tr>
+              <tr>
+                <td colspan="8">
+                  <ul>
+                    <li t-if="doc.patient_wheelchair">Patient on wheelchair</li>
+                    <li t-if="doc.patient_assistive">Walking with assistive device</li>
+                    <li t-if="doc.patient_carried">Carried by mother</li>
+                    <li t-if="doc.patient_on_bed">On bed</li>
+                    <li t-if="doc.patient_normal">Walking normally</li>
+                    <li t-if="doc.gait_other">Other: <span t-field="doc.gait_other"/></li>
+                  </ul>
+                </td>
+              </tr>
+
+              <tr><th colspan="8" class="section-header">Consciousness</th></tr>
+              <tr>
+                <td colspan="8">
+                  <ul>
+                    <li t-if="doc.oriented">Oriented</li>
+                    <li t-if="doc.confused">Confused</li>
+                    <li t-if="doc.vegetated">Vegetated</li>
+                    <li t-if="doc.conscious_other">Other: <span t-field="doc.conscious_other"/></li>
+                  </ul>
+                </td>
+              </tr>
+
+              <tr><th colspan="8" class="section-header">Risk of Fall</th></tr>
+              <tr>
+                <th>Time (seconds)</th>
+                <td><span t-field="doc.risk_time"/></td>
+                <th>Risk Level</th>
+                <td colspan="5"><span t-field="doc.risk_level"/></td>
+              </tr>
+
+              <tr><th colspan="8" class="section-header">Session</th></tr>
+              <tr>
+                <td colspan="8">
+                  <p>Session: <span t-field="doc.session"/></p>
+                  <p>Lazer: <span t-field="doc.lazer"/> | Shock Wave: <span t-field="doc.shock_wave"/> | Traction: <span t-field="doc.traction"/></p>
+                </td>
+              </tr>
+
+              <tr><th colspan="8" class="section-header">Symptoms</th></tr>
+              <tr>
+                <td colspan="8">
+                  <ul>
+                    <li t-if="doc.edema">Edema</li>
+                    <li t-if="doc.swelling">Swelling</li>
+                    <li t-if="doc.redness">Redness</li>
+                    <li t-if="doc.hotness">Hotness</li>
+                    <li t-if="doc.muscle_weakness">Muscle weakness</li>
+                    <li t-if="doc.muscle_spasm">Muscle spasm</li>
+                    <li t-if="doc.muscle_atrophy">Muscle atrophy</li>
+                  </ul>
+                  <p><strong>Deformity:</strong> <span t-field="doc.deformity"/></p>
+                </td>
+              </tr>
+
+              <tr><th colspan="8" class="section-header">Examinations</th></tr>
+              <tr>
+                <td colspan="8">
+                  <p><strong>Neurological Exam:</strong> <span t-field="doc.neuro_exam"/></p>
+                  <p><strong>Active ROM:</strong> <span t-field="doc.active_rom"/></p>
+                  <p><strong>Passive ROM:</strong> <span t-field="doc.passive_rom"/></p>
+                  <p><strong>Manual Muscle Test:</strong> <span t-field="doc.muscle_test"/></p>
+                  <p><strong>Special Test:</strong> <span t-field="doc.special_test"/></p>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </t>
+    </t>
+  </template>
+</odoo>

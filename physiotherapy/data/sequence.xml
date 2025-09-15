@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <record id="registration_sequence" model="ir.sequence">
+            <field name="name">registration Sequence</field>
+            <field name="code">registration_seq</field>
+            <field name="prefix">P</field>
+            <field name="padding">5</field>
+        </record>
+
+        <function model="res.country" name="assign_missing_state_codes"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <!-- Inherit res.users form to add field -->
+        <record id="view_users_form_inherit_specialist" model="ir.ui.view">
+            <field name="name">res.users.form.specialist.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//field[@name='groups_id']" position="after">-->
+<!--                    <field name="sales_person"/>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+    </data>
+</odoo>
