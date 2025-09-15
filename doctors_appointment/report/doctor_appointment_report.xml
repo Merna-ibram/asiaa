@@ -1,0 +1,68 @@
+<odoo>
+    <data>
+
+        <!-- Report Action -->
+        <record model="ir.actions.report" id="report_doctor_daily_appointments_action">
+            <field name="name">تقرير المواعيد اليومية</field>
+            <field name="model">appointment.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="print_report_name">'تقرير - %s' % (object.doctors_id.name)</field>
+            <field name="binding_type">report</field>
+            <field name="report_name">doctors_appointment.report_doctor_daily_appointments_template</field>
+            <field name="report_file">doctors_appointment.report_doctor_daily_appointments_template</field>
+        </record>
+
+        <!-- QWeb Template -->
+        <template id="report_doctor_daily_appointments_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <h2 style="text-align:center;">
+                            🩺 تقرير مواعيد الدكتور: <t t-esc="data['doctor_name']"/>
+                        </h2>
+                        <p style="text-align:center;">
+                            📅 الشهر: <t t-esc="data['selected_month']"/>
+                        </p>
+
+                        <t t-if="data['appointments']">
+                            <table class="table table-sm table-bordered" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>اسم الدكتور</th>
+                                        <th>اسم المريض</th>
+                                        <th>تاريخ الموعد</th>
+                                        <th>نوع الإجراء</th>
+                                        <th>تم / لم يتم</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="data['appointments']" t-as="appt">
+                                        <tr>
+                                            <td><t t-esc="appt['doctor_name']"/></td>
+                                            <td><t t-esc="appt['patient_name']"/></td>
+                                            <td><t t-esc="appt['appointment_date']"/></td>
+                                            <td><t t-esc="appt['appointment_type']"/></td>
+                                            <td><t t-esc="appt['done']"/></td>
+<!--                                            <td>-->
+<!--                                                <t t-if="appt['done']">تم</t>-->
+<!--                                                <t t-if="not appt['done']">لم يتم</t>-->
+<!--                                            </td>-->
+
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+
+                        <t t-if="not data['appointments']">
+                            <p style="text-align:center;">لا توجد مواعيد محجوزة في هذا اليوم.</p>
+                        </t>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

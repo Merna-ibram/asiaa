@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_doctors_appointment"
+        name="حجز المواعيد"
+        sequence="10"
+    />
+
+    <menuitem id="menu_patient_id"
+        name=" المواعيد"
+        parent="menu_doctors_appointment"
+        sequence="10"
+    />
+
+</odoo>

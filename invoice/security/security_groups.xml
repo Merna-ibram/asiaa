@@ -1,0 +1,23 @@
+<odoo>
+    <record id="doctors_invoice" model="ir.module.category">
+        <field name="name">Doctors Invoice</field>
+        <field name="description">Doctors Invoice</field>
+    </record>
+
+    <record id="group_doctor" model="res.groups">
+        <field name="name">Doctor</field>
+        <field name="category_id" ref="invoice.doctors_invoice"/>
+    </record>
+    <record id="group_Administrator" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="category_id" ref="invoice.doctors_invoice"/>
+    </record>
+
+<!--    &lt;!&ndash; دكاترة يشوفوا بس الفواتير بتاعتهم &ndash;&gt;-->
+<!--    <record id="rule_doctor_see_own_invoices" model="ir.rule">-->
+<!--        <field name="name">Doctor Own Invoices</field>-->
+<!--        <field name="model_id" ref="account.model_account_move"/>-->
+<!--        <field name="groups" eval="[(4, ref('invoice.group_doctor'))]"/>-->
+<!--        <field name="domain_force">[('doctor_id.user_id', '=', user.id)]</field>-->
+<!--    </record>-->
+</odoo>

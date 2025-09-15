@@ -1,0 +1,34 @@
+<odoo>
+    <record id="view_appointment_report_wizard_form" model="ir.ui.view">
+        <field name="name">appointment.report.wizard.form</field>
+        <field name="model">appointment.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="تقرير مواعيد الدكتور الشهري">
+                <group>
+                    <field name="doctors_id"/>
+                    <field name="month"/>
+                    <field name="year"/>
+                </group>
+                <footer>
+                    <button name="action_generate_report" string="طباعة التقرير" type="object" class="btn-primary"/>
+                    <button string="إلغاء" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_appointment_report_wizard" model="ir.actions.act_window">
+        <field name="name">تقرير مواعيدي الشهرية</field>
+        <field name="res_model">appointment.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_doctor_monthly_report"
+              name="تقريري الشهري"
+              parent="menu_doctors_appointment"
+              action="action_appointment_report_wizard"
+              sequence="15"
+            groups="group_doctors_appointment_administrator,group_doctors_appointment_doctor"/>
+
+</odoo>

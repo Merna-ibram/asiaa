@@ -1,0 +1,68 @@
+<odoo>
+
+    <!-- Action for Appointments -->
+    <record id="action_doctor_appointment" model="ir.actions.act_window">
+        <field name="name">Doctor Appointments</field>
+        <field name="res_model">doctor.appointment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <!-- Sub Menu: Appointments -->
+    <menuitem id="menu_doctor"
+              name="Doctor"
+              parent="menu_doctors_appointment"
+              action="action_doctor_appointment"
+              sequence="12"
+              groups="group_doctors_appointment_administrator,group_doctors_appointment_doctor"/>
+
+
+
+    <!-- Tree View -->
+    <record id="view_doctor_appointment_tree" model="ir.ui.view">
+        <field name="name">doctor.appointment.tree</field>
+        <field name="model">doctor.appointment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="appointment_date"/>
+                <field name="doctors_id"/>
+                <field name="patient_id"/>
+                <field name="is_reserved"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_doctor_appointment_form" model="ir.ui.view">
+        <field name="name">doctor.appointment.form</field>
+        <field name="model">doctor.appointment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="appointment_date"/>
+                        <field name="doctors_id"/>
+                        <field name="patient_id"/>
+                        <field name="is_reserved"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_doctor_appointment_search" model="ir.ui.view">
+        <field name="name">doctor.appointment.search</field>
+        <field name="model">doctor.appointment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="appointment_date"/>
+                <field name="patient_id"/>
+                <filter name="today" string="اليوم" domain="[('appointment_date','>=',context_today())]"/>
+
+            </search>
+        </field>
+    </record>
+</odoo>

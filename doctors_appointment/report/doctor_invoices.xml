@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+
+        <!-- Report Action -->
+        <record model="ir.actions.report" id="report_doctor_invoices_action">
+            <field name="name">تقرير المواعيد اليومية</field>
+            <field name="model">doctor.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="print_report_name">'تقرير - %s' % (object.doctors_id.name)</field>
+            <field name="binding_type">report</field>
+            <field name="report_name">doctors_appointment.report_doctor_invoices_template</field>
+            <field name="report_file">doctors_appointment.report_doctor_invoices_template</field>
+        </record>
+
+        <!-- QWeb Template -->
+<template id="report_doctor_invoices_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="text-center">
+                                <h3>تقرير الفواتير الشهرية للأطباء</h3>
+                                <p><strong>الشهر:</strong> <span t-esc="data['selected_month']"/></p>
+                                <p><strong>إجمالي المبلغ:</strong> <span t-esc="'{:,.2f}'.format(data['total_amount'])"/></p>
+                                <p><strong>إجمالي العمولات:</strong> <span t-esc="'{:,.2f}'.format(data['total_commission'])"/></p>
+                                <p><strong>إجمالي الفواتير:</strong> <span t-esc="data['invoices_count']"/></p>
+                                <!-- Individual Doctor Details -->
+                                <h4>تفاصيل الأطباء</h4>
+                                                                    </div>
+
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>اسم الطبيب</th>
+                                            <th>المبلغ الإجمالي</th>
+                                            <th>العمولة الإجمالية</th>
+                                            <th>راتب الطبيب</th>
+                                            <th>عدد الفواتير</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="data['agents_data']" t-as="agent">
+                                            <tr>
+                                                <td><span t-esc="agent['agent_name']"/></td>
+                                                <td><span t-esc="'{:,.2f}'.format(agent['total_amount'])"/></td>
+                                                <td><span t-esc="'{:,.2f}'.format(agent['total_commission'])"/></td>
+                                                <td><span t-esc="'{:,.2f}'.format(agent['doctor_salary'])"/></td>
+                                                <td><span t-esc="agent['invoices_count']"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    </data>
+</odoo>

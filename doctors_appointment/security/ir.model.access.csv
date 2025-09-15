@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_patient_appointment_doctor,Access Appointment Doctor,doctors_appointment.model_patient_appointment,,1,1,1,1
+
+access_patient_pharmacy_lines,Access Patient Pharmacy Lines,doctors_appointment.model_patient_pharmacy_lines,,1,1,1,1
+access_patient_prescription_wizard,Access Prescription Wizard,doctors_appointment.model_patient_prescription_wizard,,1,1,1,1
+access_patient_prescription_line,Access Prescription Line,doctors_appointment.model_patient_prescription_line,,1,1,1,1
+
+access_appointment_report_wizard,access appointment report wizard,model_appointment_report_wizard,,1,1,1,1
+access_doctor_report_wizard,access doctor report wizard,model_doctor_report_wizard,,1,1,1,1
