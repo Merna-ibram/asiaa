@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    display field in -->
+     <record model="ir.ui.view" id="commission_agent_history_tree">
+        <field name="name">commission Agent History</field>
+        <field name="model">commission.agent.history</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="agent_id"/>
+                <field name="commission_id"/>
+                <field name="customer_name"/>
+                <field name="invoice_no"/>
+                <field name="status"/>
+                <field name="count_invoice"/>
+                <field name="target"/>
+                <field name="total"/>
+                <field name="target_amount"/>
+                <field name="target_percentage"/>
+                <field name="pad"/>
+                <field name="amount_due"/>
+
+
+
+            </tree>
+        </field>
+    </record>
+    <!--agent target form-->
+     <record model="ir.ui.view" id="commission_agent_target_tree">
+        <field name="name">Agent Target</field>
+        <field name="model">agent.target</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="date_from" />
+                <field name="date_to" />
+                <field name="target_invoice" />
+                <field name="target_amount" />
+            </tree>
+        </field>
+    </record>
+    <!--agent target form view-->
+      <record model="ir.ui.view" id="view_agent_target_form">
+        <field name="name">Agent Target</field>
+        <field name="model">agent.target</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" invisible="1"/>
+                    <button string="Approve" type="object" name="action_send" invisible="state not in ('draft','approve')"/>
+<!--                    <button-->
+<!--                        string="Create Agent History"-->
+<!--                        type="object"-->
+<!--                        name="action_create_history"-->
+<!--                        invisible="btn_invisible == True"-->
+<!--                    /> &lt;!&ndash; states="settled" should be substituted by invisible="state not in ['settled']"  &ndash;&gt;-->
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+<!--                    <field name="web_reb" invisible="1"/>-->
+<!--                    <widget name="web_ribbon" title="Agent History Not created" bg_color="text-bg-danger" invisible="web_reb == 'create'"  />-->
+<!--                    <widget name="web_ribbon" title="Agent History Created" bg_color="text-bg-success" invisible="web_reb == 'not_created'"  />-->
+
+                    <group>
+                        <group colspan="2">
+                            <field name="name" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="date_from" readonly="state != 'draft'"/>
+                            <field name="date_to" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="target_invoice" readonly="state != 'draft'"/>
+                            <field
+                                name="target_amount" readonly="state != 'draft'"
+
+                            />
+
+                        </group>
+                    </group>
+
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+    <record id="view_commission_agent_history_search" model="ir.ui.view">
+        <field name="name">commission.agent.history.search</field>
+        <field name="model">commission.agent.history</field>
+        <field name="arch" type="xml">
+            <search string="Search Commission Agent History">
+                <filter string="Name" name="name_filter" />
+                <group string="Group By">
+                    <filter string="Month" name="group_by_name" context="{'group_by': 'invoice_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+     <record model="ir.actions.act_window" id="action_commission_agent_history">
+        <field name="name">Commission Agent History</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">commission.agent.history</field>
+        <field name="binding_view_types">tree</field>
+         <field name="context">{'search_default_group_by_name': 1}</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_commission_agent_target">
+        <field name="name">Agent Target</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">agent.target</field>
+        <field name="binding_view_types">tree,form</field>
+<!--         <field name="context">{'search_default_group_by_name': 1}</field>-->
+    </record>
+    <menuitem
+        name="Commission Agent History"
+        id="menu_commission_agent_history1"
+        parent="commission.menu_commission"
+         sequence="100"/>
+    <menuitem
+        name="Commission Agent History"
+        id="menu_commission_agent_history"
+        parent="commission.menu_commission_agent_history1"
+        action="action_commission_agent_history" />
+    <menuitem
+        name="Commission Agent Targe"
+        id="menu_commission_agent_target"
+        parent="commission.menu_commission_agent_history1"
+        action="action_commission_agent_target" />
+</odoo>

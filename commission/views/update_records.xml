@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_create_commission_history" model="ir.actions.server">
+        <field name="name">Create Commission History</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                records.create_commission_history()
+                action = {'type': 'ir.actions.act_window_close'}
+        </field>
+    </record>
+
+
+        </odoo>
