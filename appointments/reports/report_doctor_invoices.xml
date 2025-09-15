@@ -1,0 +1,56 @@
+<odoo>
+    <!-- Action التقرير -->
+    <record id="doctor_report_invoices_action" model="ir.actions.report">
+        <field name="name">تقرير الفواتير الخاصة بالدكتور</field>
+        <field name="model">doctor.invoice.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">appointments.doctor_report_invoices_template</field>
+        <field name="report_file">appointments.doctor_report_invoices_template</field>
+        <field name="print_report_name">'تقرير الفواتير - %s' % (object.report_name)</field>
+    </record>
+
+    <!-- قالب التقرير -->
+    <template id="doctor_report_invoices_template">
+    <t t-call="web.external_layout">
+        <t t-set="data" t-value="data"/>
+
+        <main class="o_report_layout">
+            <div class="page">
+                <h2 style="text-align:center; margin-bottom:20px;">
+                    التقرير الخاص بالدكتور
+                    <span t-esc="data['agents_data'][0]['agent_name']"/>
+                </h2>
+                <p style="text-align:center; font-size:14px;">
+                    عن شهر <span t-esc="data['selected_month']"/>
+                </p>
+
+                <table class="table table-sm table-bordered" style="margin-top:20px; width:100%; text-align:center; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background-color:#f0f0f0; font-weight:bold;">
+<!--                            <th>اسم الطبيب</th>-->
+                            <th>المبلغ الإجمالي</th>
+                            <th>العمولة الإجمالية</th>
+                            <th>راتب الطبيب</th>
+                            <th>عدد الفواتير</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="data['agents_data']" t-as="agent">
+<!--                            <td><span t-esc="agent['agent_name']"/></td>-->
+                            <td><span t-esc="'{:,.2f}'.format(agent['total_amount'])"/> جنيه</td>
+                            <td><span t-esc="'{:,.2f}'.format(agent['total_commission'])"/> جنيه</td>
+                            <td><span t-esc="'{:,.2f}'.format(agent['doctor_salary'])"/> جنيه</td>
+                            <td><span t-esc="agent['invoices_count']"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p t-if="not data['has_data']" style="margin-top:20px; text-align:center; color:red;">
+                    ⚠️ لا توجد فواتير مسجلة لهذا الشهر.
+                </p>
+            </div>
+        </main>
+    </t>
+</template>
+
+</odoo>

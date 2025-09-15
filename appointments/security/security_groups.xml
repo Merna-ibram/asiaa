@@ -1,0 +1,6 @@
+<odoo>
+    <record id="group_doctor_report" model="res.groups">
+        <field name="name">Doctor Report</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+</odoo>
