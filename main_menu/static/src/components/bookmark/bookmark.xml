@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="main_menu.Bookmark">
+        <Dropdown position="'bottom-end'" beforeOpen.bind="onBeforeOpen" menuClass="discussSystray.menuClass" class="discussSystray.class">
+            <t t-set-slot="toggler">
+                <i class="fa fa-lg fa-bookmark"/>
+             </t>
+            <t t-set-slot="default">
+                <div t-att-class="`${discussSystray.contentClass} my-2`">
+                    <t t-foreach="bookmarks" t-as="bookmark" t-key="bookmark.id">
+                        <DropdownItem onSelected="() => this.openBookmark(bookmark)">
+                            <div class="my-1">
+                                <i class="me-2 fa fa-fw fa-globe"/>
+                                <t t-esc="bookmark.name"/>
+                            </div>
+                        </DropdownItem>
+                    </t>
+                    <DropdownItem onSelected="() => this.openMyBookmarks()">
+                        <div class="my-1">
+                            View all bookmarks
+                        </div>
+                    </DropdownItem>
+                </div>
+            </t>
+        </Dropdown>
+    </t>
+</templates>

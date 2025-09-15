@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="main_menu.NavBar" t-inherit="web.NavBar" t-inherit-mode="extension">
+        <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="before">
+            <div class="d-flex justify-content-center align-items-center cursor-pointer" t-on-click="onClickMenu">
+                <i class="oi oi-apps text-white mx-3 fs-2"/>
+            </div>
+        </xpath>
+    </t>
+</templates>
