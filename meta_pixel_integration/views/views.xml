@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pixel_template_inherit_web_layout" name="Pixel Template" inherit_id="web.layout">
+        <xpath expr="//head" position="inside">
+            <!-- Retrieve Facebook Pixel ID -->
+            <t t-set="pix_id" t-value="request.env['ir.config_parameter'].sudo().get_param('pixel_id')"/>
+            <t t-if="pix_id">
+                <script>
+                    // Initialize the Pixel ID from Odoo parameter
+                    var pixelId = "<t t-esc="pix_id" />";
+
+                    // Facebook Pixel Standard Script
+                    (function(f, b, e, v, n, t, s) {
+                        if (f.fbq) return;
+                        n = f.fbq = function() {
+                            n.callMethod ?
+                            n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+                        };
+                        if (!f._fbq) f._fbq = n;
+                        n.push = n;
+                        n.loaded = !0;
+                        n.version = '2.0';
+                        n.queue = [];
+                        t = b.createElement(e);
+                        t.async = !0;
+                        t.src = v;
+                        s = b.getElementsByTagName(e)[0];
+                        s.parentNode.insertBefore(t, s);
+                    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+                    // Initialize Facebook Pixel with the Pixel ID
+                    fbq('init', pixelId);
+                    fbq('track', 'PageView');
+
+                    // Add event listeners for various events
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Add to Cart event
+                        document.querySelectorAll('#add_to_cart').forEach(function(button) {
+                            button.addEventListener('click', function(event) {
+                                const productId = button.getAttribute('data-product-id') || 'unknown';
+                                const productName = button.getAttribute('data-product-name') || 'unknown';
+                                const productPrice = button.getAttribute('data-product-price') || 0;
+
+                                fbq('track', 'AddToCart', {
+                                    content_ids: [productId],
+                                    content_name: productName,
+                                    content_type: 'product',
+                                    value: productPrice,
+                                    currency: 'USD'
+                                });
+                            });
+                        });
+
+                        // Add to Wishlist event
+                        document.querySelectorAll('.o_add_wishlist').forEach(function(button) {
+                            button.addEventListener('click', function(event) {
+                                const productId = button.getAttribute('data-product-id') || 'unknown';
+                                const productName = button.getAttribute('data-product-name') || 'unknown';
+
+                                fbq('track', 'AddToWishlist', {
+                                    content_ids: [productId],
+                                    content_name: productName,
+                                    content_type: 'product'
+                                });
+                            });
+                        });
+
+                        // Search event
+document.querySelectorAll('.oe_search_button').forEach(function(button) {
+    button.addEventListener('click', function(event) {
+        const searchQuery = document.querySelector('.search-query')?.value || '';
+        fbq('track', 'Search', {
+            search_string: searchQuery,
+            content_category: 'site_search'
+        });
+        console.log('Facebook Pixel: Search event tracked');
+    });
+});
+                        // Contact event
+                    function trackContactThankYou() {
+                            const path = window.location.pathname.toLowerCase();
+                            if (path.includes('contactus-thank-you') || path.includes('contact-thank-you')) {
+                                fbq('track', 'Contact', {
+                                    content_category: 'Contact Form Submission',
+                                    status: 'completed'
+                                });
+                                console.log('Facebook Pixel: Contact form submission tracked');
+                            }
+                        }
+
+                        // Run immediately and on DOMContentLoaded
+                        trackContactThankYou();
+                        document.addEventListener('DOMContentLoaded', trackContactThankYou);
+
+
+                        // Initiate Checkout event
+                       function trackInitiateCheckout() {
+   document.querySelectorAll('a[href="/shop/checkout"]').forEach(function(link) {
+                            link.addEventListener('click', function(event) {
+                                console.log('df')
+                                fbq('track', 'InitiateCheckout');
+                            });
+                        });
+}
+                    trackInitiateCheckout();
+                    document.addEventListener('DOMContentLoaded', trackInitiateCheckout);
+                    });
+                        // Complete Registration event (for signup forms)
+                    function trackFirstTimeRegistration() {
+    const path = window.location.pathname.toLowerCase();
+
+    // 1. If user is on /web/signup — clear flag
+    if (path === '/web/signup' || path.endsWith('/web/signup')) {
+        localStorage.removeItem('odoo_registration_tracked');
+        console.log('[FB Pixel] Registration flag reset on /web/signup');
+    }
+
+    // 2. If user is on /my — run tracking if not done yet
+    if (path === '/my' || path.endsWith('/my')) {
+        if (!localStorage.getItem('odoo_registration_tracked')) {
+            if (typeof fbq === 'function') {
+                fbq('track', 'CompleteRegistration', {
+                    content_category: 'Account Registration',
+                    status: 'completed'
+                });
+                console.log('[FB Pixel] First-time registration tracked');
+                localStorage.setItem('odoo_registration_tracked', 'true');
+            }
+        }
+    }
+}
+
+// Run on page load
+
+
+            // Run immediately (in case DOM is already ready) AND on DOMContentLoaded
+            trackFirstTimeRegistration();
+            document.addEventListener('DOMContentLoaded', trackFirstTimeRegistration);
+                </script>
+                <noscript>
+                    <img height="1" width="1" style="display:none"
+                         t-att-src="'https://www.facebook.com/tr?id=' + (pix_id or '') + '&amp;ev=PageView&amp;noscript=1'"/>
+                </noscript>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="pixel_purchase_tracking" inherit_id="website_sale.confirmation" name="Pixel Purchase Tracking">
+        <xpath expr="//div[@id='oe_structure_website_sale_confirmation_2']" position="inside">
+            <t t-set="pix_id" t-value="request.env['ir.config_parameter'].sudo().get_param('pixel_id')"/>
+            <t t-if="pix_id">
+              <script>
+    function trackPurchase() {
+        // Only proceed if we're on an order confirmation page
+        const path = window.location.pathname.toLowerCase();
+        if (!path.includes('/shop/confirmation') &amp;&amp; !path.includes('/order/confirmation')) {
+            return;
+        }
+
+        // Check if FB Pixel is available
+        if (typeof fbq !== 'function') {
+            console.warn('FB Pixel not loaded yet');
+            return;
+        }
+
+        // Get order data from Odoo template
+        var pixelId = "<t t-esc="pix_id" />";
+        var orderTotal = "<t t-esc="order.amount_total" />";
+        var currency = "<t t-esc="order.currency_id.name" />";
+        var contentIds = [];
+
+        <t t-foreach="order.order_line" t-as="line">
+            contentIds.push('<t t-esc="line.product_id.id"/>');
+        </t>
+
+        // Track purchase
+        fbq('track', 'Purchase', {
+            value: orderTotal,
+            currency: currency,
+            content_ids: contentIds,
+            content_type: 'product'
+        });
+
+        // Get payment method from transaction (if available)
+<!--        var paymentMethod = 'unknown';-->
+<!--        % if order.transaction_ids:-->
+<!--            paymentMethod = "<t t-esc="order.transaction_ids[0].acquirer_id.name"/>" || 'unknown';-->
+<!--        % endif-->
+
+<!--        fbq('track', 'AddPaymentInfo', {-->
+<!--            value: orderTotal,-->
+<!--            currency: currency,-->
+<!--            payment_method: paymentMethod-->
+<!--        });-->
+
+        console.log('[FB Pixel] Purchase tracked for order', contentIds);
+    }
+
+    // Run immediately and on DOMContentLoaded
+    trackPurchase();
+    document.addEventListener('DOMContentLoaded', trackPurchase);
+</script>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

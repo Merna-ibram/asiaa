@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_meta_pixel_integration_meta_pixel_integration,meta_pixel_integration.meta_pixel_integration,model_meta_pixel_integration_meta_pixel_integration,base.group_user,1,1,1,1
